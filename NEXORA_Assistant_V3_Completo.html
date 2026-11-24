@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<title>NEXORA AI | Assistant</title>
+<style>
+:root{--bg:#071426;--panel:#0c2037;--panel2:#153453;--blue:#1479df;--muted:#9db3ca;--line:#1d3d5c;--green:#6ef0b2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{position:sticky;top:0;z-index:2;background:#09182a;border-bottom:1px solid var(--line);padding:15px 18px;display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;background:var(--blue);font-size:23px;font-weight:bold}
+.brand{font-weight:bold;font-size:18px}.sub{color:#83a9d0;font-size:11px;letter-spacing:1px;margin-top:4px}
+main{max-width:850px;margin:auto;padding:20px 15px 35px}
+.hero{text-align:center;padding:25px 8px 20px}
+.hero h1{font-size:clamp(25px,6vw,36px);margin:8px 0}
+.hero p{color:var(--muted);line-height:1.55}
+.pill{display:inline-block;padding:8px 13px;border-radius:20px;background:#103c34;color:var(--green);font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin:14px 0}
+.panel h2{font-size:16px;margin:0 0 10px;color:#b9d9fa}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.quick button{background:#153453;border:1px solid #285071;color:#dcecff;padding:9px 11px;border-radius:20px}
+.chat{height:min(48vh,440px);min-height:250px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.message{max-width:92%;padding:12px 14px;border-radius:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel2)}
+.user{align-self:flex-end;background:#1267bd}
+.bot{align-self:flex-start}
+.input-area{display:flex;gap:9px;margin-top:12px}
+input{flex:1;min-width:0;background:#09182a;color:white;border:1px solid #285071;padding:14px;border-radius:10px;font-size:16px}
+button{cursor:pointer}
+.send{border:0;background:var(--blue);color:white;padding:0 17px;border-radius:10px;font-weight:bold}
+.note{color:#91a9c2;font-size:12px;line-height:1.5}
+footer{text-align:center;color:#66829e;font-size:12px;padding:20px}
+@media(max-width:420px){.input-area{gap:6px}.send{padding:0 12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">N</div>
+  <div><div class="brand">NEXORA AI</div><div class="sub">ASSISTANT • PROTÓTIPO LOCAL</div></div>
+</header>
+<main>
+  <section class="hero">
+    <div class="pill">● Protótipo em desenvolvimento</div>
+    <h1>Conheça a NEXORA AI</h1>
+    <p>Uma iniciativa de tecnologia que está começando a desenvolver soluções com inteligência artificial para apoiar empresas.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Experimente perguntar</h2>
+    <div class="quick">
+      <button onclick="quickAsk('O que é a NEXORA AI?')">Sobre a NEXORA</button>
+      <button onclick="quickAsk('Quem criou a NEXORA?')">Fundador</button>
+      <button onclick="quickAsk('Como a NEXORA foi criada?')">Nossa história</button>
+      <button onclick="quickAsk('Qual é o primeiro produto?')">Produto</button>
+      <button onclick="quickAsk('Quanto é 125 * 8?')">Fazer cálculo</button>
+      <button onclick="quickAsk('Quais são os planos futuros?')">Planos futuros</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="chat" id="chat" aria-live="polite">
+      <div class="message bot">Olá! Sou o NEXORA Assistant, um protótipo de demonstração. Posso explicar o projeto NEXORA AI, apresentar o NEXORA Assistant e resolver cálculos básicos. O que você gostaria de saber?</div>
+    </div>
+    <div class="input-area">
+      <input id="message" type="text" placeholder="Pergunte sobre a NEXORA ou faça um cálculo..." autocomplete="off">
+      <button class="send" id="send">Enviar</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Sobre esta versão</h2>
+    <p class="note">Esta versão usa uma base de conhecimento escrita e respostas programadas no próprio arquivo. Ela não está conectada à internet nem a um modelo de IA generativa, não aprende sozinha e não conhece informações que não foram adicionadas à sua base.</p>
+  </section>
+</main>
+<footer>NEXORA AI • THINK BEYOND. BUILD THE FUTURE.</footer>
+
+<script>
+const knowledge = {
+  company: "A NEXORA AI é um projeto de tecnologia e inteligência artificial. A ideia é desenvolver soluções digitais que ajudem empresas a organizar tarefas, melhorar processos e atender melhor seus clientes.",
+  founder: "A NEXORA AI foi idealizada pelo seu fundador, que está conduzindo o planejamento e o desenvolvimento inicial. Por segurança, esta demonstração não publica nome completo nem dados pessoais. A assistência de ferramentas de IA pode apoiar o trabalho, mas não substitui o papel do fundador.",
+  history: "A NEXORA AI começou como uma ideia de criar uma empresa de tecnologia. O projeto foi organizado em etapas: apresentação institucional, planejamento do produto, plano comercial, marketing, financeiro, atendimento e projetos. Depois começou a construção do primeiro protótipo no celular, usando o Acode. Esta tela é uma demonstração inicial, não uma empresa já estabelecida com operação completa.",
+  product: "O primeiro produto planejado é o NEXORA Assistant: um assistente virtual para apoiar pequenos negócios. A proposta é responder perguntas frequentes usando informações aprovadas pelo negócio, receber solicitações simples e encaminhar dúvidas complexas para uma pessoa.",
+  features: "Na proposta, o NEXORA Assistant poderá responder perguntas frequentes, informar dados fornecidos pelo negócio, organizar solicitações e encaminhar conversas para atendimento humano. Os recursos ainda precisam ser desenvolvidos, conectados e testados.",
+  technology: "O protótipo atual foi escrito em HTML, CSS e JavaScript e pode ser aberto no Acode pelo celular. Esta versão usa regras locais e uma pequena base de conhecimento. Uma IA generativa real exigirá integração com um serviço de modelo por meio de um backend seguro; chaves secretas não devem ficar dentro do HTML público.",
+  audience: "O público inicial planejado são pequenos negócios que recebem perguntas repetidas de clientes. O primeiro segmento ainda precisa ser escolhido e validado.",
+  business: "O modelo de negócio que está sendo estudado combina possível implantação inicial e mensalidade, mas preços ainda não foram definidos. Antes disso, é necessário conhecer os custos das ferramentas e validar o interesse de possíveis clientes.",
+  principles: "Os princípios do projeto são começar com os recursos disponíveis, estudar continuamente, controlar os gastos, aprender a vender, não prometer o que ainda não foi construído, reinvestir com responsabilidade e crescer com paciência. A escola e os estudos também devem continuar sendo prioridade.",
+  future: "Os próximos passos planejados são escolher um tipo de pequeno negócio para a demonstração, montar perguntas e respostas verificadas, melhorar o protótipo, testar sem dados pessoais reais, avaliar custos e só então decidir os próximos recursos.",
+  status: "A NEXORA AI está em fase inicial de planejamento e prototipagem. Este protótipo não representa uma empresa com equipe, escritório, clientes ou serviços comerciais já confirmados."
+};
+
+function normalize(s){
+  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+function addMessage(text, type){
+  const chat=document.getElementById("chat");
+  const el=document.createElement("div");
+  el.className="message "+type;
+  el.textContent=text;
+  chat.appendChild(el);
+  chat.scrollTop=chat.scrollHeight;
+}
+function safeCalculate(raw){
+  let expr=raw
+    .replace(/quanto e|calcule|calcular|resultado de|faz a conta|faca a conta/gi,"")
+    .replace(/,/g,".")
+    .replace(/[×x]/g,"*")
+    .replace(/÷/g,"/")
+    .replace(/mais/gi,"+")
+    .replace(/menos/gi,"-")
+    .replace(/vezes/gi,"*")
+    .replace(/dividido por/gi,"/")
+    .replace(/por cento/gi,"%")
+    .replace(/\s+/g,"");
+  if(!expr || !/^[0-9+\-*/().%]+$/.test(expr)) return null;
+  if(!/[0-9]/.test(expr)) return null;
+  // Parser matemático limitado: sem eval(), funções, variáveis ou acesso ao sistema.
+  let i=0;
+  function parseExpression(){
+    let value=parseTerm();
+    while(expr[i]==="+" || expr[i]==="-"){
+      const op=expr[i++], right=parseTerm();
+      value=op==="+"?value+right:value-right;
+    }
+    return value;
+  }
+  function parseTerm(){
+    let value=parseFactor();
+    while(expr[i]==="*" || expr[i]==="/" || expr[i]==="%"){
+      const op=expr[i++], right=parseFactor();
+      if((op==="/" || op==="%") && right===0) throw Error("zero");
+      value=op==="*"?value*right:op==="/"?value/right:value%right;
+    }
+    return value;
+  }
+  function parseFactor(){
+    if(expr[i]==="+"){i++;return parseFactor();}
+    if(expr[i]==="-"){i++;return -parseFactor();}
+    if(expr[i]==="("){
+      i++; const v=parseExpression();
+      if(expr[i]!==")") throw Error("parenteses");
+      i++; return v;
+    }
+    const start=i;
+    while(i<expr.length && /[0-9.]/.test(expr[i])) i++;
+    if(start===i) throw Error("numero");
+    const n=Number(expr.slice(start,i));
+    if(!Number.isFinite(n)) throw Error("numero");
+    return n;
+  }
+  try{
+    const result=parseExpression();
+    if(i!==expr.length || !Number.isFinite(result)) return null;
+    return Number(result.toFixed(8)).toLocaleString("pt-BR");
+  }catch(e){return null;}
+}
+function answerQuestion(original){
+  const q=normalize(original);
+  const calc=safeCalculate(original);
+  if(calc!==null && /[0-9]/.test(original)) return "Resultado: "+calc;
+  if(/quem (criou|fundou)|fundador|idealizador/.test(q)) return knowledge.founder;
+  if(/como.*(criada|comecou|surgiu)|historia|origem/.test(q)) return knowledge.history;
+  if(/produto|assistant|assistente/.test(q)) return knowledge.product;
+  if(/funcionalidade|o que.*(faz|consegue)|recursos/.test(q)) return knowledge.features;
+  if(/tecnologia|programada|codigo|acode|como funciona/.test(q)) return knowledge.technology;
+  if(/publico|cliente|pequeno negocio|para quem/.test(q)) return knowledge.audience;
+  if(/preco|precos|mensalidade|cobra|custo|modelo de negocio/.test(q)) return knowledge.business;
+  if(/futuro|proximos passos|planos|objetivo/.test(q)) return knowledge.future;
+  if(/status|fase|ja existe|escritorio|equipe|clientes/.test(q)) return knowledge.status;
+  if(/principios|valores|conselhos/.test(q)) return knowledge.principles;
+  if(/nexora|empresa|sobre/.test(q)) return knowledge.company;
+  if(/oi|ola|bom dia|boa tarde|boa noite/.test(q)) return "Olá! Que bom receber sua mensagem. Posso contar sobre a NEXORA AI, seu fundador, sua história, o produto e os próximos passos.";
+  if(/ajuda|ajudar/.test(q)) return "Posso explicar a empresa, o fundador, a história do projeto, o NEXORA Assistant, a tecnologia, os planos e também fazer cálculos básicos. Experimente os botões de perguntas.";
+  return "Ainda não tenho essa informação na base de conhecimento desta demonstração. Não quero inventar uma resposta. Essa pergunta poderá ser adicionada à base depois de ser verificada.";
+}
+function sendMessage(){
+  const input=document.getElementById("message");
+  const text=input.value.trim();
+  if(!text)return;
+  addMessage(text,"user");
+  addMessage(answerQuestion(text),"bot");
+  input.value="";
+  input.focus();
+}
+function quickAsk(text){
+  document.getElementById("message").value=text;
+  sendMessage();
+}
+document.getElementById("send").addEventListener("click",sendMessage);
+document.getElementById("message").addEventListener("keydown",e=>{
+  if(e.key==="Enter")sendMessage();
+});
+</script>
+</body>
+</html>
